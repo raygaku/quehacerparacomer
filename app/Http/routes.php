@@ -11,6 +11,9 @@
 |
 */
 
-$app->get('/', function () use ($app) {
-    return $app->version();
+$app->get('/', function ()  {
+    return view("landing",['name' => 'Edgar']);
 });
+
+$app->post('/recetas', 'recetasController@cogerRecetas');
+$app->post('/cogerRecetaPorID', 'recetasController@cogerRecetasPorId');
