@@ -12,7 +12,11 @@
 */
 
 $app->get('/', function ()  {
-    return view("landing",['name' => 'Edgar']);
+    return view("landing");
+});
+
+$app->get('/controlSudo', function(){
+    return view("sudo");
 });
 
 $app->post('/recetas', 'recetasController@cogerRecetas');
