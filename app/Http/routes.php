@@ -22,3 +22,4 @@ $app->get('/controlSudo', function(){
 $app->post('/recetas', 'recetasController@cogerRecetas');
 $app->post('/cogerRecetaPorID', 'recetasController@cogerRecetasPorId');
 $app->post('/recogerNuevaReceta','recetasController@recibirRecetaNueva');
+$app->post('/cogerCategorias', 'categoriasController@cogerCategorias');

@@ -21,11 +21,6 @@
     <script src="scripts/bootstrap/bootstrap.min.js"></script>
     <script src="scripts/angular/angular.min.js"></script>
     <script src="scripts/angular/modules/sudo-module.js"></script>
-    <!-- Main Quill library -->
-    <script src="scripts/quill/quill.min.js" type="text/javascript"></script>
-
-    <!-- Theme included stylesheets -->
-    <link href="styles/quill/quill.snow.css" rel="stylesheet">
 
 
 </head>
@@ -35,44 +30,33 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label for="usr">Título:</label>
-                <input type="text" class="form-control" id="titulo">
+                <input type="text" class="form-control" id="titulo" ng-model="recetaObj.titulo">
             </div>
             <div class="form-group">
                 <label for="usr">Descripción:</label>
-                <textarea class="form-control" rows="5" id="descripcion"></textarea>
+                <textarea class="form-control" rows="5" id="descripcion" ng-model="recetaObj.descripcion"></textarea>
             </div>
         </div>
         <div class="col-md-12">
-            <div id="editor">
+            <h3><b>Texto</b></h3>
+            <textarea class="form-control" rows="5" id="Receta" ng-model="recetaObj.texto"></textarea>
 
-            </div>
-            <button class="btn btn-success" onclick="enviarReceta()">Enviar Receta</button>
         </div>
+        <div class="col-md-4">
+            <h3>Categoria</h3>
+            <select class="form-control" id="categoria" ng-model="recetaObj.categoria">
+                <option value="postres">Postres</option>
+                <option value="pastas">Pastas</option>
+                <option value="cremas">Cremas</option>
+                <option value="antojitos">Antojitos</option>
+            </select>
+        </div>
+        <div class="col-md-12">
+            <button class="btn btn-success" ng-click="publicarReceta()">Enviar Receta</button>
+        </div>
+
     </div>
 </div>
-
-
-<script type="text/javascript">
-    var quill = new Quill('#editor', {
-        theme: 'snow',
-        placeholder: 'Escribe la receta aquí!'
-    });
-
-    var enviarReceta = function()
-    {
-        var tema = $('#titulo').val();
-        var desc = $('#descripcion').val();
-        console.log(tema)
-        rec = quill.getContents();
-//        rec = JSON.stringify(rec);
-        console.log(rec)
-        var envio = $.post("/recogerNuevaReceta", {titulo: tema,receta : rec,descripcion:desc});
-        envio.done(function(data){
-            console.log(data)
-        })
-
-    }
-</script>
 
 </body>
 </html>
