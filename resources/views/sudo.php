@@ -29,7 +29,7 @@
 
 
 </head>
-<body>
+<body ng-app="sudoapp" ng-controller="MainController">
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -37,12 +37,16 @@
                 <label for="usr">Título:</label>
                 <input type="text" class="form-control" id="titulo">
             </div>
+            <div class="form-group">
+                <label for="usr">Descripción:</label>
+                <textarea class="form-control" rows="5" id="descripcion"></textarea>
+            </div>
         </div>
         <div class="col-md-12">
             <div id="editor">
 
             </div>
-            <button onclick="aver()">Que hay</button>
+            <button class="btn btn-success" onclick="enviarReceta()">Enviar Receta</button>
         </div>
     </div>
 </div>
@@ -54,11 +58,18 @@
         placeholder: 'Escribe la receta aquí!'
     });
 
-
-    var aver  = function()
+    var enviarReceta = function()
     {
-        var delta = quill.getText();
-        console.log(delta)
+        var tema = $('#titulo').val();
+        var desc = $('#descripcion').val();
+        console.log(tema)
+        rec = quill.getContents();
+//        rec = JSON.stringify(rec);
+        console.log(rec)
+        var envio = $.post("/recogerNuevaReceta", {titulo: tema,receta : rec,descripcion:desc});
+        envio.done(function(data){
+            console.log(data)
+        })
 
     }
 </script>

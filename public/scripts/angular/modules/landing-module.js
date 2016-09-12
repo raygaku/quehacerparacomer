@@ -11,21 +11,25 @@ lanapp.controller('MainController',['$scope','$http',function($scope,$http)
         .error(function()
         {
             console.log("not found")
-        })
+        });
+
     $scope.leer = function(id)
     {
-        console.log(id)
-        $scope.datosEnviar = {'id' : id}
-        $http.post('/cogerRecetaPorID',$scope.datosEnviar)
+        $http.post('/cogerRecetaPorID',{id:id})
             .success(function(data)
             {
-                console.log(data)
-                $scope.recetaElegida = data
-            })
-            .error(function(err)
-            {
-                console.log("Ocurrio un error")
+                $scope.recetaElegida = data;
             })
 
+        var lectura = $.post("/cogerRecetaPorID",{id : id});
+        lectura.done(function(data)
+        {
+            console.log("Lei a receta")
+
+            console.log(data[0]['texto'])
+            var receta = data[0]['texto']
+            // quill.setContents(receta)
+            setear(receta)
+        })
     }
 }]);

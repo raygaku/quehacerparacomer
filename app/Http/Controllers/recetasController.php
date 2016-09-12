@@ -22,5 +22,21 @@ class recetasController extends Controller
         $results = app('db')->select("SELECT * FROM recetas WHERE id = {$id}");
         return $results;
     }
+
+    public function recibirRecetaNueva(Request $request)
+    {
+        $titulo = $request->input('titulo');
+        $receta = $request->input('receta');
+        $descripcion = $request->input('descripcion');
+        $query = app('db')->insert("INSERT INTO recetas (titulo,texto,descripcion) VALUES ('$titulo','$receta','$descripcion')");
+        if($query)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
 }
 

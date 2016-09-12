@@ -24,6 +24,11 @@
     <script src="scripts/bootstrap/bootstrap.min.js"></script>
     <script src="scripts/angular/angular.min.js"></script>
     <script src="scripts/angular/modules/landing-module.js"></script>
+    <!-- Main Quill library -->
+    <script src="scripts/quill/quill.min.js" type="text/javascript"></script>
+
+    <!-- Theme included stylesheets -->
+    <link href="styles/quill/quill.snow.css" rel="stylesheet">
 
 
 
@@ -92,8 +97,6 @@
                     <p><a href="#" class="btn btn-primary" role="button" ng-click="leer(rec.id)" data-toggle="modal" data-target="#myModal">Leer</a> <a href="#" class="btn btn-default" role="button">Guardar</a></p>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>
@@ -110,7 +113,9 @@
                 <h4 class="modal-title">{{receta.titulo}}</h4>
             </div>
             <div class="modal-body">
-                <p>{{receta.texto}}</p>
+                <div id="editor">
+<!--                    {{receta.texto}}-->
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -122,5 +127,20 @@
 
 </div>
 
+<script type="text/javascript">
+    var quill = new Quill('#editor', {
+        theme: 'snow',
+        readOnly : true,
+    });
+
+    var setear = function(setear)
+    {
+        console.log("Si entro a setear")
+
+//        quill.setText(setear)
+        console.log(setear)
+    }
+
+</script>
 </body>
 </html>
