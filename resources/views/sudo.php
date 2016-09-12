@@ -21,6 +21,8 @@
     <script src="scripts/bootstrap/bootstrap.min.js"></script>
     <script src="scripts/angular/angular.min.js"></script>
     <script src="scripts/angular/modules/sudo-module.js"></script>
+    <script src="sweetalert/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="sweetalert/sweetalert.css">
 
 
 </head>
@@ -31,6 +33,8 @@
             <div class="form-group">
                 <label for="usr">Título:</label>
                 <input type="text" class="form-control" id="titulo" ng-model="recetaObj.titulo">
+                <label for="usr">Imagen:</label>
+                <input type="file" id="portada_receta" ng-model="recetaObj.portada">
             </div>
             <div class="form-group">
                 <label for="usr">Descripción:</label>
@@ -39,16 +43,15 @@
         </div>
         <div class="col-md-12">
             <h3><b>Texto</b></h3>
-            <textarea class="form-control" rows="5" id="Receta" ng-model="recetaObj.texto"></textarea>
+            <textarea class="form-control" rows="5" id="Receta" ng-model="recetaObj.texto" placeholder="Pon el título en la primer linea, que irá centrada">
+
+            </textarea>
 
         </div>
         <div class="col-md-4">
             <h3>Categoria</h3>
             <select class="form-control" id="categoria" ng-model="recetaObj.categoria">
-                <option value="postres">Postres</option>
-                <option value="pastas">Pastas</option>
-                <option value="cremas">Cremas</option>
-                <option value="antojitos">Antojitos</option>
+                <option ng-repeat="cat in categorias" value="{{cat.id}}">{{cat.nombre_categoria}}</option>
             </select>
         </div>
         <div class="col-md-12">

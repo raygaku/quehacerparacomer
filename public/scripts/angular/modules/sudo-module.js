@@ -15,10 +15,22 @@ sudoapp.controller('MainController',['$scope','$http',function($scope,$http)
         })
 
 
-    $scope.recetaObj = {titulo: '', descripcion: '', texto: '', categoria: ''}
+    $scope.recetaObj = {titulo: '', descripcion: '', texto: '', categoria: '', portada:''}
     $scope.publicarReceta = function()
     {
-        console.log($scope.recetaObj)
+        $http.post('/recogerNuevaReceta',$scope.recetaObj)
+            .success(function(data){
+                console.log($scope.recetaObj)
+                swal("Receta Enviada");
+                $scope.recetaObj.titulo = ''
+                $scope.recetaObj.descripcion = ''
+                $scope.recetaObj.texto = ''
+                $scope.recetaObj.categoria = ''
+
+            })
+            .error(function(data){
+                console.log("Ocurrio un error 505")
+            })
     }
 }]);
 

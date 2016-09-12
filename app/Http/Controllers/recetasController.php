@@ -26,9 +26,11 @@ class recetasController extends Controller
     public function recibirRecetaNueva(Request $request)
     {
         $titulo = $request->input('titulo');
-        $receta = $request->input('receta');
+        $receta = $request->input('texto');
         $descripcion = $request->input('descripcion');
-        $query = app('db')->insert("INSERT INTO recetas (titulo,texto,descripcion) VALUES ('$titulo','$receta','$descripcion')");
+        $categoria = $request->input('categoria');
+        $descripcion = $request->input('descripcion');
+        $query = app('db')->insert("INSERT INTO recetas (titulo,texto,descripcion,categoria) VALUES ('$titulo','$receta','$descripcion',{$categoria})");
         if($query)
         {
             return 1;

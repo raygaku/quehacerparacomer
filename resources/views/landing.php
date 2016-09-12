@@ -21,14 +21,13 @@
     <title>Cocina Rico, Cocina Fácil</title>
     <script src="scripts/jquery/jquery-3.1.0.min.js"></script>
     <link rel="stylesheet" href="styles/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="sweetalert/sweetalert.css">
     <script src="scripts/bootstrap/bootstrap.min.js"></script>
     <script src="scripts/angular/angular.min.js"></script>
     <script src="scripts/angular/modules/landing-module.js"></script>
-    <!-- Main Quill library -->
-    <script src="scripts/quill/quill.min.js" type="text/javascript"></script>
 
-    <!-- Theme included stylesheets -->
-    <link href="styles/quill/quill.snow.css" rel="stylesheet">
+    <script src="sweetalert/sweetalert.min.js"></script>
+
 
 
 
@@ -57,9 +56,8 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categorias<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Postres</a></li>
-                            <li><a href="#">Pastas</a></li>
-                            <li><a href="#">Cremas</a></li>
+                            <li ng-repeat="cat in categorias"><a href="#">{{cat.nombre_categoria}}</a></li>
+
                         </ul>
                     </li>
                 </ul>
@@ -113,9 +111,10 @@
                 <h4 class="modal-title">{{receta.titulo}}</h4>
             </div>
             <div class="modal-body">
-                <div id="editor">
-<!--                    {{receta.texto}}-->
-                </div>
+                <pre>
+                      {{receta.texto}}
+                </pre>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

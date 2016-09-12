@@ -32,4 +32,13 @@ lanapp.controller('MainController',['$scope','$http',function($scope,$http)
             setear(receta)
         })
     }
+
+    $http.post('/cogerCategorias',{})
+        .success(function(data){
+            $scope.categorias = data
+        })
+        .error(function(data){
+            console.log("Ocurrio error 505")
+        })
+
 }]);
