@@ -6,7 +6,7 @@ lanapp.controller('MainController',['$scope','$http',function($scope,$http)
   $scope.pin = function(rec)
   {
     $scope.piner = {recetaid : rec}
-    console.log("El id es " + $scope.piner.recetaid);
+    //console.log("El id es " + $scope.piner.recetaid);
     $http.post('/pin',$scope.piner)
     .success(function(data){
       if(data == 1){
@@ -46,11 +46,11 @@ $scope.busqueda = {titulo:''}
 $scope.buscar = function()
 {
   $scope.busqueda.titulo = $("#ingenieur").val();
-  console.log($scope.busqueda);
+  //console.log($scope.busqueda);
   var index = $scope.awlist.indexOf($scope.busqueda.titulo)
-  console.log(index);
+  //console.log(index);
   $scope.busquedaId = $scope.awlist[index + 1]
-  console.log($scope.busquedaId);
+  //console.log($scope.busquedaId);
   $scope.leer($scope.busquedaId)
   $("#launcher").click();
 }
@@ -139,6 +139,7 @@ $scope.task= function(funcion)
 
   switch (funcion) {
     case "cerrarSesion":
+    //console.log("logout");
       $http.post('/logout',{})
       .success(function(data){
         location.reload();
@@ -149,6 +150,9 @@ $scope.task= function(funcion)
     break;
     case "login":
     $('#alertaGuardar').hide();
+    break;
+    case "misRecetas":
+    window.location = '/misRecetas'
     break;
 
    default:

@@ -126,6 +126,9 @@ $scope.task= function(funcion)
     case "login":
     $('#alertaGuardar').hide();
     break;
+    case "misRecetas":
+    window.location = '/misRecetas'
+    break;
    default:
 
   }

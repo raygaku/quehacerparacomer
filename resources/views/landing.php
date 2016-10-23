@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+
 //session_destroy();
 
 /**
@@ -22,8 +23,13 @@ session_start();
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cocina Rico, Cocina Fácil</title>
+    <title>Cocina Rico | Cocina Fácil</title>
+    <meta name="description" content="Recetas de cocina para cuando no sabes que hacer para comer">
+    <meta name="keywords" content="que hacer para comer, que comer hoy, comer sano , que cocino hoy , postres deliciosos">
+    <meta name="author" content="Hola Stdio!">
+    
     <script src="scripts/jquery/jquery-3.1.0.min.js"></script>
+    <link rel="icon" type="image/png" href="/files/stand.png" />
     <link rel="stylesheet" href="styles/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="sweetalert/sweetalert.css">
     <link rel="stylesheet" href="styles/iStyles/normal.css" >
@@ -55,7 +61,7 @@ session_start();
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">Cocina Rico</a>
+                <a class="navbar-brand marca" href="/" >¿Qué hacer para comer?</a>
             </div>
 
 
@@ -97,7 +103,7 @@ session_start();
     <div class="row">
         <div class="col-sm-6 col-md-4" ng-repeat="rec in recetasExistentes">
             <div class="thumbnail">
-                <img ng-src="{{rec.portada}}" alt="..."  ng-click="leer(rec.id)" data-toggle="modal" data-target="#myModal">
+                <img ng-src="{{rec.portada}}" alt="..."  ng-click="leer(rec.id)" data-toggle="modal" data-target="#myModal" style="max-height: 16em;" class="img-thumbnail">
                 <div class="caption">
                     <h3 ng-click="leer(rec.id)" data-toggle="modal" data-target="#myModal">{{rec.titulo}}</h3>
                     <p ng-click="leer(rec.id)" data-toggle="modal" data-target="#myModal"> {{rec.descripcion}}</p>
@@ -117,13 +123,37 @@ session_start();
         <div class="modal-content" >
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <img ng-src="{{receta.portada}}" class="img-circle" width="304" height="236" style="margin-left:22%;">
+                <img ng-src="{{receta.portada}}"  class="img-circle img-responsive"  style="margin-left:25%;width:50%;">
                 <h4 class="modal-title">{{receta.titulo}}</h4>
+                <p>
+                  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- quehacerparacomer recetas -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-2520617391431043"
+     data-ad-slot="8250536410"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+                </p>
             </div>
             <div class="modal-body">
+              <!--
                 <pre>
                       {{receta.texto}}
                 </pre>
+
+              <textarea id="recetaCuerpo" disabled="true">
+                  {{receta.texto}}
+              </textarea>
+
+            -->
+
+
+          <pre id="recetaCuerpo">
+            {{receta.texto}}
+          </pre>
+
 
             </div>
             <div class="modal-footer">
@@ -208,7 +238,28 @@ session_start();
 
 </div>
 
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- quehacerparacomer -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2520617391431043"
+     data-ad-slot="1939977611"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-85470308-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 
 
 </body>

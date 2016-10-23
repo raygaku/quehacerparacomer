@@ -116,4 +116,31 @@ class usuariosController extends Controller
     }
 
   }
+
+  public function obtenerId()
+  {
+    session_start();
+    $id = $_SESSION['userid'];
+    return $id;
+  }
+
+
+  public function sudoLogin(Request $r)
+  {
+    session_start();
+    $codigo = array(
+      'codigo' => 1,
+      'data' => '',
+    );
+    $username = $r->input('username');
+    $password = $r->input('password');
+    $query = app('db')->select("SELECT * FROM sudos WHERE username = '$username' AND password = '$password'");
+    if($query != null)
+    {
+      $codigo['codigo'] = 0;
+      $codigo['data'] = $query;
+      $_SESSION['sudoon'] = 1;
+    }
+    return json_encode($codigo);
+  }
 }

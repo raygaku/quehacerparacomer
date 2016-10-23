@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: edgar
@@ -29,13 +30,14 @@
 <body ng-app="sudoapp" ng-controller="MainController">
 <div class="container">
     <div class="row">
+      <h3>Subir receta</h3>
         <div class="col-md-12">
 
           <form name="upload" ng-submit="uploadFile()">
             <div class="form-group">
               <label for="usr">Imagen:</label>
               <input type="file" id="portada_receta" name="file" uploader-model="file">
-              <button type="submit" class="btn btn-success" name="button" ng-click="subirPortada()">Subir portada</button>
+              <button type="submit" class="btn btn-success" name="button">Subir portada</button>
             </div>
           </form>
 
@@ -70,6 +72,38 @@
         </div>
 
     </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Manejar Categorias</h3>
+      </div>
+
+      <div class="col-md-12">
+        <label>Desactivar Categorias</label>
+        <select  id="categoria" ng-model="categoriaADesactivar.id">
+            <option ng-repeat="cat in categorias" value="{{cat.id}}">{{cat.nombre_categoria}}</option>
+        </select>
+        <button type="button" name="btn-desactivar" class="btn btn-danger" ng-click="desactivarCategoria()">Desactivar</button>
+      </div>
+
+      <div class="col-md-12">
+        <label>Activar Categorias</label>
+        <select  id="categoria" ng-model="categoriaAactivar.id">
+            <option ng-repeat="cat in categoriasDesactivadas" value="{{cat.id}}">{{cat.nombre_categoria}}</option>
+        </select>
+        <button type="button" name="btn-activar" class="btn btn-success" ng-click="activarCategoria()">Activar</button>
+      </div>
+
+      <div class="col-md-12">
+        <label>Añadir categoria</label>
+        <input type="text" name="nuevaCat" class="form-control" placeholder="Ingresa el nombre de la nueva categoria" ng-model="nuevaCategoria.nombre">
+        <button type="button" name="btn-enviarCat" class="btn  btn-info" ng-click="agregarCategoria()">Agregar categoria</button>
+      </div>
+
+      <div class="col-md-12">
+        <button type="button" class="btn btn-warning" name="logout" ng-click="cerrarSesion()">Salir</button>
+      </div>
+    </div>
+
 </div>
 
 </body>

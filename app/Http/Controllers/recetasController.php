@@ -10,7 +10,7 @@ class recetasController extends Controller
     public function cogerRecetas()
     {
 //        $recetas = DB::select(SELECT * FROM recetas);
-        $results = app('db')->select("SELECT * FROM recetas");
+        $results = app('db')->select("SELECT * FROM recetas ORDER  BY id DESC");
 //        $results = DB::table('recetas')->get();
         return $results;
     }
@@ -37,10 +37,13 @@ class recetasController extends Controller
         return $results;
     }
 
-    public function recibirPortadaReceta(Request $request)
+    public function recibirPortadaReceta()
     {
+
       $today = getdate();
+
       $file = $_FILES["file"]["name"];
+
       if(!is_dir("files/"))
         mkdir("files/",0777);
 
@@ -54,6 +57,7 @@ class recetasController extends Controller
         $query = app('db')->insert("INSERT INTO `portada-receta` (ruta,clave) VALUES ('$ruta','$clave')");
         return $ruta;
       }
+
       return 1;
     }
 
@@ -79,5 +83,18 @@ class recetasController extends Controller
         }
 
         return 101;
+    }
+
+
+    public function obtenerMisRecetas()
+    {
+      session_start();
+      $uid = $_SESSION['userid'];
+      $query = app('db')->select(
+      "SELECT pins.userid, pins.recetaid , recetas.id, recetas.titulo, recetas.texto,recetas.status, recetas.corazones, recetas.portada,
+       recetas.descripcion,recetas.categoria FROM recetas JOIN pins ON pins.recetaid = recetas.id WHERE pins.userid ={$uid} ORDER  BY recetas.id DESC "
+    );
+
+    return $query;
     }
 }

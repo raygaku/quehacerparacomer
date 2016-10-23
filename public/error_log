@@ -1,0 +1,8 @@
+[06-Oct-2016 16:26:38 UTC] PHP Fatal error:  Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/quehacer/vendor/symfony/polyfill-mbstring/Mbstring.php on line 352
+[06-Oct-2016 16:26:41 UTC] PHP Fatal error:  Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/quehacer/vendor/symfony/polyfill-mbstring/Mbstring.php on line 352
+[06-Oct-2016 16:36:01 UTC] PHP Fatal error:  Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/quehacer/vendor/symfony/polyfill-mbstring/Mbstring.php on line 352
+[06-Oct-2016 16:36:23 UTC] PHP Fatal error:  Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/quehacer/vendor/symfony/polyfill-mbstring/Mbstring.php on line 352
+[06-Oct-2016 18:29:28 UTC] PHP Fatal error:  Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/quehacer/vendor/symfony/polyfill-mbstring/Mbstring.php on line 352
+[06-Oct-2016 18:33:24 UTC] PHP Fatal error:  Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/quehacer/vendor/symfony/polyfill-mbstring/Mbstring.php on line 352
+[06-Oct-2016 18:33:30 UTC] PHP Fatal error:  Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/quehacer/vendor/symfony/polyfill-mbstring/Mbstring.php on line 352
+[06-Oct-2016 18:33:47 UTC] PHP Fatal error:  Call to undefined function Symfony\Polyfill\Mbstring\iconv_strpos() in /home/quehacer/vendor/symfony/polyfill-mbstring/Mbstring.php on line 352
