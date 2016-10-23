@@ -30,11 +30,22 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
+
+          <form name="upload" ng-submit="uploadFile()">
+            <div class="form-group">
+              <label for="usr">Imagen:</label>
+              <input type="file" id="portada_receta" name="file" uploader-model="file">
+              <button type="submit" class="btn btn-success" name="button" ng-click="subirPortada()">Subir portada</button>
+            </div>
+          </form>
+
             <div class="form-group">
                 <label for="usr">Título:</label>
                 <input type="text" class="form-control" id="titulo" ng-model="recetaObj.titulo">
-                <label for="usr">Imagen:</label>
-                <input type="file" id="portada_receta" ng-model="recetaObj.portada">
+                <label for="usr">
+                  Clave Única de Portada
+                </label>
+                  <input type="text" name="cover_id" class="form-control" id="cover_id" ng-model="recetaObj.portada" disabled="true">
             </div>
             <div class="form-group">
                 <label for="usr">Descripción:</label>

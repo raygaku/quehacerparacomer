@@ -15,12 +15,46 @@ class recetasController extends Controller
         return $results;
     }
 
+    public function cogerTitulos()
+    {
+      $results = app('db')->select("SELECT titulo, id FROM recetas");
+      $titulos = array();
+      for($i = 0; $i < count($results) ; $i++)
+      {
+        foreach ($results[$i] as $key => $value) {
+            $titulos[] = $value;
+        }
+      }
+
+      return $titulos;
+    }
+
 
     public function cogerRecetasPorId(Request $request)
     {
         $id = $request->input('id');
         $results = app('db')->select("SELECT * FROM recetas WHERE id = {$id}");
         return $results;
+    }
+
+    public function recibirPortadaReceta(Request $request)
+    {
+      $today = getdate();
+      $file = $_FILES["file"]["name"];
+      if(!is_dir("files/"))
+        mkdir("files/",0777);
+
+      if($file && move_uploaded_file($_FILES["file"]["tmp_name"], "files/".$file))
+      {
+        rename("files/".$file, "files/".$today[0].$file);
+        $ruta = "files/".$today[0].$file;
+        $claveNombre = explode(".",$file);
+        $clave = $today[0].$claveNombre[0];
+
+        $query = app('db')->insert("INSERT INTO `portada-receta` (ruta,clave) VALUES ('$ruta','$clave')");
+        return $ruta;
+      }
+      return 1;
     }
 
     public function recibirRecetaNueva(Request $request)
@@ -30,7 +64,11 @@ class recetasController extends Controller
         $descripcion = $request->input('descripcion');
         $categoria = $request->input('categoria');
         $descripcion = $request->input('descripcion');
-        $query = app('db')->insert("INSERT INTO recetas (titulo,texto,descripcion,categoria) VALUES ('$titulo','$receta','$descripcion',{$categoria})");
+        $portada = $request->input('portada');
+
+
+
+        $query = app('db')->insert("INSERT INTO recetas (titulo,texto,portada,descripcion,categoria) VALUES ('$titulo','$receta','$portada','$descripcion',{$categoria})");
         if($query)
         {
             return 1;
@@ -39,6 +77,7 @@ class recetasController extends Controller
         {
             return 0;
         }
+
+        return 101;
     }
 }
-

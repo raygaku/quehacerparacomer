@@ -3,7 +3,7 @@
  */
 var sudoapp = angular.module('sudoapp',[]);
 
-sudoapp.controller('MainController',['$scope','$http',function($scope,$http)
+sudoapp.controller('MainController',['$scope','$http','upload',function($scope,$http,upload)
 {
 
     $http.post('/cogerCategorias',{})
@@ -15,17 +15,27 @@ sudoapp.controller('MainController',['$scope','$http',function($scope,$http)
         })
 
 
-    $scope.recetaObj = {titulo: '', descripcion: '', texto: '', categoria: '', portada:''}
+    $scope.recetaObj = {titulo: '', descripcion: '', texto: '', categoria: '', portada: ''}
+
+    $scope.uploadFile = function()
+    {
+      var name = "photo"
+      var file = $scope.file;
+      //console.log(file)
+      upload.uploadFile(name,file).then(function(res)
+    {
+      $scope.recetaObj.portada = res.data;
+      console.log(res);
+    })
+
+    }
     $scope.publicarReceta = function()
     {
         $http.post('/recogerNuevaReceta',$scope.recetaObj)
             .success(function(data){
                 console.log($scope.recetaObj)
                 swal("Receta Enviada");
-                $scope.recetaObj.titulo = ''
-                $scope.recetaObj.descripcion = ''
-                $scope.recetaObj.texto = ''
-                $scope.recetaObj.categoria = ''
+                
 
             })
             .error(function(data){
@@ -34,3 +44,41 @@ sudoapp.controller('MainController',['$scope','$http',function($scope,$http)
     }
 }]);
 
+sudoapp.directive('uploaderModel', ["$parse",function($parse){
+  return {
+    restrict : 'A',
+    link: function(scope,iElement,iAttrs)
+    {
+      iElement.on("change",function(e)
+    {
+      $parse(iAttrs.uploaderModel).assign(scope,iElement[0].files[0])
+    });
+    }
+  }
+}]);
+
+sudoapp.service('upload',["$http","$q",function($http,$q){
+  this.uploadFile = function(name,file)
+  {
+    var deferred = $q.defer();
+    var formData = new FormData();
+    formData.append("name",name);
+    formData.append("file",file);
+    return $http.post("/cogerPoradaReceta", formData,{
+      headers : {
+        "Content-type" : undefined
+      },
+      transformRequest : formData
+    })
+    .success(function(res,data){
+
+
+      deferred.resolve(res)
+    })
+    .error(function(msg,code,err){
+      deferred.reject(msg)
+      console.log(err);
+    })
+    return deferred.promise;
+  }
+}])

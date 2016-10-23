@@ -1,0 +1,16 @@
+@font-face {
+    font-family: asap;
+    src: url(fonts/asap.ttf);
+}
+
+pre {
+  font-family: asap;
+  background-color: #fff;
+  font-size: 13pt;
+}
+
+#inputEmail,#inputPassword,#loginBtn,#headerLogin{
+  margin: auto;
+  margin-bottom: 1em;
+  width: 50%;
+}

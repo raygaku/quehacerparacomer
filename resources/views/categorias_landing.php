@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 
 //session_destroy();
 
@@ -29,7 +29,7 @@ session_start();
     <link rel="stylesheet" href="styles/iStyles/normal.css" >
     <script src="scripts/bootstrap/bootstrap.min.js"></script>
     <script src="scripts/angular/angular.min.js"></script>
-    <script src="scripts/angular/modules/landing-module.js"></script>
+    <script src="scripts/angular/modules/categorias-module.js"></script>
     <link rel="stylesheet" href="awesomplete/awesomplete.css" >
     <script src="awesomplete/awesomplete.min.js" charset="utf-8"></script>
 
@@ -42,7 +42,7 @@ session_start();
 
 
 </head>
-<body ng-app="lanapp" ng-controller="MainController">
+<body ng-app="lanapp" ng-controller="categoriasController">
 <div class="container">
 <div class="row">
     <nav class="navbar navbar-default">
@@ -61,9 +61,9 @@ session_start();
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Página Principal <span class="sr-only">(current)</span></a></li>
+                    <li ><a href="/">Página Principal <span class="sr-only">(current)</span></a></li>
 
-                    <li class="dropdown">
+                    <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categorias<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li ng-repeat="cat in categorias"><a ng-href="categoria={{cat.id}}">{{cat.nombre_categoria}}</a></li>
