@@ -117,6 +117,33 @@ class usuariosController extends Controller
 
   }
 
+  public function cal(Request $request)
+  {
+    session_start();
+    $recetaid = $request->input('recetaid');
+    if(!isset($_SESSION['userid'])){
+      return 1;
+    }
+    else {
+      $userid = $_SESSION['userid'];
+
+      $validar = app('db')->select("SELECT id FROM pins WHERE userid = {$userid} AND recetaid = {$recetaid}");
+
+      if($validar == null)
+      {
+        $query = app('db')->insert("INSERT INTO recetas (calificacion) VALUES ({$recetaid})");
+      }
+
+      return 0;
+
+    }
+
+  }
+
+
+
+
+
   public function obtenerId()
   {
     session_start();

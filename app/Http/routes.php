@@ -15,6 +15,50 @@ $app->get('/', function ()  {
     return view("landing");
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$app->get('pruebaa', function(){ //En esa ruta va ejecutar la funcion que recibe como segundo parametro
+  return "Hola desde routes.php";
+});
+
+$app->get('prueba22/{nombre}', function ($nombre){ //En esa ruta se le da un parametro obligatorio encerrado entre {} y va ejecutar una función que recibe como parámetro el valor antes dado
+  return "Mi nombre es: ".$nombre;
+});
+
+$app->get('edad/{edad}', function ($edad){
+  return "Mi edad es: ".$edad;
+});
+
+$app->get('edad2/{edad?}', function ($edad = 20){ //En esa ruta se le da un parámetro opcional con el signo de ?, si se da el parámetro, imprime ese parámetro, caso contrario imprime el default
+  return "Mi edad es: ".$edad;
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 $app->get('/categoria={categoria}','categoriasController@obtenerVista');
 $app->get('/misRecetas',function(){
   return view("misrecetas");
@@ -32,6 +76,18 @@ $app->get('/sudoPanel', ['middleware' => 'checkSudo', function () {
 }]);
 
 
+
+
+
+
+
+
+
+
+
+
+
+$app->post('/calificar', 'recetasController@guardarCalificacion');
 $app->post('/recetas', 'recetasController@cogerRecetas');
 $app->post('/cogerRecetaPorID', 'recetasController@cogerRecetasPorId');
 $app->post('/recogerNuevaReceta','recetasController@recibirRecetaNueva');

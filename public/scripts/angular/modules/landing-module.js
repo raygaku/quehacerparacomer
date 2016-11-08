@@ -21,6 +21,50 @@ lanapp.controller('MainController',['$scope','$http',function($scope,$http)
     })
   }
 
+  $scope.enviarCalf = function(id, valor)
+  {
+    console.log(id + " "+ valor);
+    $scope.calificacion = {rating : valor, rid : id}
+    $http.post('/calificar', $scope.calificacion )
+    .success(function(data){
+    swal("Guardado : \)")
+
+  })
+  .error(function(err){
+    console.log(err)
+  })
+  }
+
+
+
+  $scope.ratings =  0;
+  //
+  // $scope.insertdata=function(rec){
+  //   $scope.piner = {recetaid : rec}
+  //   $http.post("",{$scope.piner, 'ratings':$scope.ratings})
+  //   .success(function(data,status,headers,config){
+  //     console.log("data inserted");
+  //   });
+  // }
+  $scope.cal = function(rec)
+  {
+    $scope.piner = {recetaid : rec}
+    $scope.ratings = {rating : ratings}
+    $http.post('/calificar', $scope.ratings)
+    .success(function(data){
+      if(data == 1){
+        $('#myModalLogin').modal('show');
+        $('#alertaGuardar').show();
+      }
+      else {
+        swal("Guardado :\)")
+      }
+    })
+
+
+  }
+
+
 
 
 

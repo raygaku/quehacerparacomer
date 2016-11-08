@@ -97,4 +97,13 @@ class recetasController extends Controller
 
     return $query;
     }
-}
+
+    public function guardarCalificacion(Request $request)
+    {
+      session_start();
+      $uid = $_SESSION['userid'];
+      $rating = $request->input('rating');
+      $rid = $request->input('rid');
+      $query = app('db')->insert("INSERT INTO recetas_calificacion (receta_id,usuario_id,calificacion) VALUES ($uid,$rating,$rid) ");
+    }
+ }
