@@ -16,8 +16,13 @@ class recetasController extends Controller
        $uid = $_SESSION['userid'];
 //        $recetas = DB::select(SELECT * FROM recetas);
         $results = app('db')->select("SELECT r.id, r.titulo, r.texto, r.fecha_subida, r.status, r.corazones, r.portada, r.descripcion, r.categoria, rc.receta_id, rc.usuario_id, rc.calificacion FROM recetas AS r JOIN recetas_calificacion AS rc ON r.id = rc.receta_id WHERE {$uid} = rc.usuario_id ");
+        $validacion =  app('db')->select("SELECT receta_id FROM recetas_calificacion");
+        if ($validacion == '') {
+          $results = app('db')->select("SELECT * FROM recetas");
+        }
+        else{
         $results += app('db')->select("SELECT * FROM recetas WHERE id NOT IN (SELECT receta_id FROM recetas_calificacion) ");
-
+      }
         return $results;
       }else {
         $results = app('db')->select("SELECT * FROM recetas");
@@ -98,7 +103,7 @@ class recetasController extends Controller
 
 
     public function obtenerMisRecetas()
-    {
+      {
       session_start();
       $uid = $_SESSION['userid'];
       $query = app('db')->select(
@@ -116,7 +121,7 @@ class recetasController extends Controller
       $uid = $_SESSION['userid'];
       $rating = $request->input('rating');
       $rid = $request->input('rid');
-      $validacion = app('db')->select("SELECT * FROM recetas_calificacion WHERE receta_id = $rid AND $uid = usuario_id "); 
+      $validacion = app('db')->select("SELECT * FROM recetas_calificacion WHERE receta_id = $rid AND $uid = usuario_id ");
       if ($validacion == '') { //SI es nulo se puede inertar
         $query = app('db')->insert("INSERT INTO recetas_calificacion (usuario_id,calificacion,receta_id) VALUES ($uid,$rating,$rid) ");
       } else {
