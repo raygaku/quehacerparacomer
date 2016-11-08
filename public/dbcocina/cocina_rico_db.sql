@@ -2,10 +2,10 @@
 -- version 4.5.2
 -- http://www.phpmyadmin.net
 --
--- Servidor: localhost
--- Tiempo de generación: 23-10-2016 a las 21:40:16
--- Versión del servidor: 10.1.16-MariaDB
--- Versión de PHP: 5.5.38
+-- Host: localhost
+-- Generation Time: Nov 08, 2016 at 08:23 
+-- Server version: 10.1.16-MariaDB
+-- PHP Version: 5.6.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,13 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `cocina_rico_db`
+-- Database: `cocina_rico_db`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `accesos`
+-- Table structure for table `accesos`
 --
 
 CREATE TABLE `accesos` (
@@ -35,7 +35,7 @@ CREATE TABLE `accesos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `accesos`
+-- Dumping data for table `accesos`
 --
 
 INSERT INTO `accesos` (`id`, `ruta`, `nombre`, `login`, `funcion`) VALUES
@@ -47,7 +47,7 @@ INSERT INTO `accesos` (`id`, `ruta`, `nombre`, `login`, `funcion`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `categorias`
+-- Table structure for table `categorias`
 --
 
 CREATE TABLE `categorias` (
@@ -58,7 +58,7 @@ CREATE TABLE `categorias` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `categorias`
+-- Dumping data for table `categorias`
 --
 
 INSERT INTO `categorias` (`id`, `valor`, `nombre_categoria`, `status`) VALUES
@@ -74,7 +74,7 @@ INSERT INTO `categorias` (`id`, `valor`, `nombre_categoria`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `pins`
+-- Table structure for table `pins`
 --
 
 CREATE TABLE `pins` (
@@ -84,7 +84,7 @@ CREATE TABLE `pins` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `pins`
+-- Dumping data for table `pins`
 --
 
 INSERT INTO `pins` (`id`, `userid`, `recetaid`) VALUES
@@ -94,12 +94,15 @@ INSERT INTO `pins` (`id`, `userid`, `recetaid`) VALUES
 (8, 6, 16),
 (9, 4, 18),
 (10, 4, 25),
-(11, 4, 21);
+(11, 4, 21),
+(12, 8, 34),
+(13, 8, 32),
+(14, 8, 33);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `portada-receta`
+-- Table structure for table `portada-receta`
 --
 
 CREATE TABLE `portada-receta` (
@@ -109,7 +112,7 @@ CREATE TABLE `portada-receta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `portada-receta`
+-- Dumping data for table `portada-receta`
 --
 
 INSERT INTO `portada-receta` (`id`, `ruta`, `clave`) VALUES
@@ -131,7 +134,7 @@ INSERT INTO `portada-receta` (`id`, `ruta`, `clave`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `recetas`
+-- Table structure for table `recetas`
 --
 
 CREATE TABLE `recetas` (
@@ -147,7 +150,7 @@ CREATE TABLE `recetas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `recetas`
+-- Dumping data for table `recetas`
 --
 
 INSERT INTO `recetas` (`id`, `titulo`, `texto`, `fecha_subida`, `status`, `corazones`, `portada`, `descripcion`, `categoria`) VALUES
@@ -169,7 +172,30 @@ INSERT INTO `recetas` (`id`, `titulo`, `texto`, `fecha_subida`, `status`, `coraz
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `sudos`
+-- Table structure for table `recetas_calificacion`
+--
+
+CREATE TABLE `recetas_calificacion` (
+  `id` int(11) NOT NULL,
+  `receta_id` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
+  `calificacion` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `recetas_calificacion`
+--
+
+INSERT INTO `recetas_calificacion` (`id`, `receta_id`, `usuario_id`, `calificacion`) VALUES
+(2, 33, 8, 3),
+(3, 27, 8, 3.5),
+(4, 28, 8, 4),
+(5, 24, 8, 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sudos`
 --
 
 CREATE TABLE `sudos` (
@@ -179,17 +205,18 @@ CREATE TABLE `sudos` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `sudos`
+-- Dumping data for table `sudos`
 --
 
 INSERT INTO `sudos` (`id`, `username`, `password`) VALUES
 (1, 'cesar_nieto', 'zf4Z8M2K'),
-(2, 'edgar_arroyo', 'i5tmXd47');
+(2, 'edgar_arroyo', 'i5tmXd47'),
+(3, 'ivancito', '123');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Table structure for table `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -199,99 +226,111 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `usuarios`
+-- Dumping data for table `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `correo`, `password`) VALUES
 (4, 'hi.ed@hotmail.com', 'e178f759fe55c8c9596f2202060dc7dd'),
 (6, 'jjmv.97@hotmail.com', '320e265aaf720e903b1e1561cbd8a75a'),
-(7, 'alejandra.jim97@gmail.com', '9f8b9b003eb2c5a823659ebc5d62c706');
+(7, 'alejandra.jim97@gmail.com', '9f8b9b003eb2c5a823659ebc5d62c706'),
+(8, 'xbox_livegold@hotmail.es', '202cb962ac59075b964b07152d234b70');
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `accesos`
+-- Indexes for table `accesos`
 --
 ALTER TABLE `accesos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `categorias`
+-- Indexes for table `categorias`
 --
 ALTER TABLE `categorias`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `pins`
+-- Indexes for table `pins`
 --
 ALTER TABLE `pins`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `portada-receta`
+-- Indexes for table `portada-receta`
 --
 ALTER TABLE `portada-receta`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `recetas`
+-- Indexes for table `recetas`
 --
 ALTER TABLE `recetas`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `sudos`
+-- Indexes for table `recetas_calificacion`
+--
+ALTER TABLE `recetas_calificacion`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `sudos`
 --
 ALTER TABLE `sudos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `usuarios`
+-- Indexes for table `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `accesos`
+-- AUTO_INCREMENT for table `accesos`
 --
 ALTER TABLE `accesos`
   MODIFY `id` bigint(80) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
--- AUTO_INCREMENT de la tabla `categorias`
+-- AUTO_INCREMENT for table `categorias`
 --
 ALTER TABLE `categorias`
   MODIFY `id` bigint(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
--- AUTO_INCREMENT de la tabla `pins`
+-- AUTO_INCREMENT for table `pins`
 --
 ALTER TABLE `pins`
-  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
--- AUTO_INCREMENT de la tabla `portada-receta`
+-- AUTO_INCREMENT for table `portada-receta`
 --
 ALTER TABLE `portada-receta`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 --
--- AUTO_INCREMENT de la tabla `recetas`
+-- AUTO_INCREMENT for table `recetas`
 --
 ALTER TABLE `recetas`
   MODIFY `id` bigint(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 --
--- AUTO_INCREMENT de la tabla `sudos`
+-- AUTO_INCREMENT for table `recetas_calificacion`
+--
+ALTER TABLE `recetas_calificacion`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `sudos`
 --
 ALTER TABLE `sudos`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT de la tabla `usuarios`
+-- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` bigint(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
