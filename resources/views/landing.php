@@ -147,7 +147,7 @@ session_start();
 
     <div class="row">
         <div class="col-sm-6 col-md-4" ng-repeat="rec in recetasExistentes">
-            <div class="thumbnail">
+            <div class="thumbnail " ng-if="1">
                 <img ng-src="{{rec.portada}}" alt="..."  ng-click="leer(rec.id)" data-toggle="modal" data-target="#myModal" style="max-height: 16em;" class="img-thumbnail">
                 <div class="caption">
                     <h3 ng-click="leer(rec.id)" data-toggle="modal" data-target="#myModal">{{rec.titulo}}</h3>
@@ -162,26 +162,25 @@ session_start();
 
 
 
-                    <h1>Pure CSS Star Rating Widget</h1>
+
                     <form ng-controller="MainController" name="login">
                     <fieldset class="rating">
 
-                        <input ng-click="enviarCalf(rec.id,5)" ng-model="ratings" type="radio" id="{{rec.id}}star5" name="rating" value="5" /><label class = "full" for="{{rec.id}}star5" title="Awesome - 5 stars"></label>
-                        <input ng-click="enviarCalf(rec.id,4.5)" ng-model="ratings" type="radio" id="{{rec.id}}star4half" name="rating" value="4.5" /><label class="half" for="{{rec.id}}star4half" title="Pretty good - 4.5 stars"></label>
-                        <input ng-click="enviarCalf(rec.id,4)" ng-model="ratings" type="radio" id="{{rec.id}}star4" name="rating" value="4" /><label class = "full" for="{{rec.id}}star4" title="Pretty good - 4 stars"></label>
-                        <input ng-click="enviarCalf(rec.id,3.5)" ng-model="ratings" type="radio" id="{{rec.id}}star3half" name="rating" value="3.5" /><label class="half" for="{{rec.id}}star3half" title="Meh - 3.5 stars"></label>
-                        <input ng-click="enviarCalf(rec.id,3)" ng-model="ratings" type="radio" id="{{rec.id}}star3" name="rating" value="3" /><label class = "full" for="{{rec.id}}star3" title="Meh - 3 stars"></label>
-                        <input ng-click="enviarCalf(rec.id,2.5)" ng-model="ratings" type="radio" id="{{rec.id}}star2half" name="rating" value="2.5" /><label class="half" for="{{rec.id}}star2half" title="Kinda bad - 2.5 stars"></label>
-                        <input ng-click="enviarCalf(rec.id,2)" ng-model="ratings" type="radio" id="{{rec.id}}star2" name="rating" value="2" /><label class = "full" for="{{rec.id}}star2" title="Kinda bad - 2 stars"></label>
-                        <input ng-click="enviarCalf(rec.id,1.5)" ng-model="ratings" type="radio" id="{{rec.id}}star1half" name="rating" value="1.5" /><label class="half" for="{{rec.id}}star1half" title="Meh - 1.5 stars"></label>
-                        <input ng-click="enviarCalf(rec.id,1)" ng-model="ratings" type="radio" id="{{rec.id}}star1" name="rating" value="1" /><label class = "full" for="{{rec.id}}star1" title="Sucks big time - 1 star"></label>
-                        <input ng-click="enviarCalf(rec.id,0.5)" ng-model="ratings" type="radio" id="{{rec.id}}starhalf" name="rating" value="0.5" /><label class="half" for="{{rec.id}}starhalf" title="Sucks big time - 0.5 stars"></label>
+                        <input ng-click="enviarCalf(rec.id,5)" ng-model="rec.calificacion" type="radio" id="{{rec.id}}star5" name="rating" value="5" /><label class = "full" for="{{rec.id}}star5" title="Awesome - 5 stars"></label>
+                        <input ng-click="enviarCalf(rec.id,4.5)" ng-model="rec.calificacion" type="radio" id="{{rec.id}}star4half" name="rating" value="4.5" /><label class="half" for="{{rec.id}}star4half" title="Pretty good - 4.5 stars"></label>
+                        <input ng-click="enviarCalf(rec.id,4)" ng-model="rec.calificacion" type="radio" id="{{rec.id}}star4" name="rating" value="4" /><label class = "full" for="{{rec.id}}star4" title="Pretty good - 4 stars"></label>
+                        <input ng-click="enviarCalf(rec.id,3.5)" ng-model="rec.calificacion" type="radio" id="{{rec.id}}star3half" name="rating" value="3.5" /><label class="half" for="{{rec.id}}star3half" title="Meh - 3.5 stars"></label>
+                        <input ng-click="enviarCalf(rec.id,3)" ng-model="rec.calificacion" type="radio" id="{{rec.id}}star3" name="rating" value="3" /><label class = "full" for="{{rec.id}}star3" title="Meh - 3 stars"></label>
+                        <input ng-click="enviarCalf(rec.id,2.5)" ng-model="rec.calificacion" type="radio" id="{{rec.id}}star2half" name="rating" value="2.5" /><label class="half" for="{{rec.id}}star2half" title="Kinda bad - 2.5 stars"></label>
+                        <input ng-click="enviarCalf(rec.id,2)" ng-model="rec.calificacion" type="radio" id="{{rec.id}}star2" name="rating" value="2" /><label class = "full" for="{{rec.id}}star2" title="Kinda bad - 2 stars"></label>
+                        <input ng-click="enviarCalf(rec.id,1.5)" ng-model="rec.calificacion" type="radio" id="{{rec.id}}star1half" name="rating" value="1.5" /><label class="half" for="{{rec.id}}star1half" title="Meh - 1.5 stars"></label>
+                        <input ng-click="enviarCalf(rec.id,1)" ng-model="rec.calificacion" type="radio" id="{{rec.id}}star1" name="rating" value="1" /><label class = "full" for="{{rec.id}}star1" title="Sucks big time - 1 star"></label>
+                        <input ng-click="enviarCalf(rec.id,0.5)" ng-model="rec.calificacion" type="radio" id="{{rec.id}}starhalf" name="rating" value="0.5" /><label class="half" for="{{rec.id}}starhalf" title="Sucks big time - 0.5 stars"></label>
 
-                  
                     </fieldset>
-                    <input type="button" name="name" value="submit" ng-click="insertdata()">
-                    <input type="submit" name="name" >
-                    <a href="#" class="btn btn-default" role="button" ng-click="cal(rec.id)" onclick="login.submit();">Rate It</a></p>
+
+
+
 
                     </form>
 

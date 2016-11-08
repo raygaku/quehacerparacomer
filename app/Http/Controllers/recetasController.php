@@ -9,10 +9,20 @@ class recetasController extends Controller
 {
     public function cogerRecetas()
     {
+      session_start();
+      if(isset($_SESSION['userid'])){
+
+
+       $uid = $_SESSION['userid'];
 //        $recetas = DB::select(SELECT * FROM recetas);
-        $results = app('db')->select("SELECT * FROM recetas ORDER  BY id DESC");
-//        $results = DB::table('recetas')->get();
+        $results = app('db')->select("SELECT r.id, r.titulo, r.texto, r.fecha_subida, r.status, r.corazones, r.portada, r.descripcion, r.categoria, rc.receta_id, rc.usuario_id, rc.calificacion FROM recetas AS r JOIN recetas_calificacion AS rc ON r.id = rc.receta_id WHERE {$uid} = rc.usuario_id ");
+        $results += app('db')->select("SELECT * FROM recetas WHERE id NOT IN (SELECT receta_id FROM recetas_calificacion) ");
+
         return $results;
+      }else {
+        $results = app('db')->select("SELECT * FROM recetas");
+        return $results;
+      }
     }
 
     public function cogerTitulos()
@@ -101,9 +111,14 @@ class recetasController extends Controller
     public function guardarCalificacion(Request $request)
     {
       session_start();
+      if(isset($_SESSION['userid'])){
       $uid = $_SESSION['userid'];
       $rating = $request->input('rating');
       $rid = $request->input('rid');
-      $query = app('db')->insert("INSERT INTO recetas_calificacion (receta_id,usuario_id,calificacion) VALUES ($uid,$rating,$rid) ");
+      $query = app('db')->insert("INSERT INTO recetas_calificacion (usuario_id,calificacion,receta_id) VALUES ($uid,$rating,$rid) ");
+      return 0;
+    } else {
+      return 1;
+    }
     }
  }
