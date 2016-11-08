@@ -3,6 +3,8 @@ var lanapp = angular.module('lanapp',[]);
 lanapp.controller('MainController',['$scope','$http',function($scope,$http)
 {
 
+
+
   $scope.pin = function(rec)
   {
     $scope.piner = {recetaid : rec}
@@ -20,6 +22,59 @@ lanapp.controller('MainController',['$scope','$http',function($scope,$http)
       }
     })
   }
+
+$scope.valor = {valor:''}
+  $scope.enviarCalf = function(id, valor)
+  {
+    console.log($scope.valor);
+    console.log(id + " "+ valor);
+    $scope.calificacion = {rating : valor, rid : id}
+    $http.post('/calificar', $scope.calificacion )
+    .success(function(data){
+      if (data==0) {
+        swal("Guardado : \)")
+      } else {
+        $scope.rec.calificacion = 0
+        $('#myModalLogin').modal('show');
+        $('#alertaGuardar').show();
+      }
+
+
+  })
+  .error(function(err){
+    console.log(err)
+  })
+  }
+
+
+
+  $scope.ratings =  0;
+  //
+  // $scope.insertdata=function(rec){
+  //   $scope.piner = {recetaid : rec}
+  //   $http.post("",{$scope.piner, 'ratings':$scope.ratings})
+  //   .success(function(data,status,headers,config){
+  //     console.log("data inserted");
+  //   });
+  // }
+  $scope.cal = function(rec)
+  {
+    $scope.piner = {recetaid : rec}
+    $scope.ratings = {rating : ratings}
+    $http.post('/calificar', $scope.ratings)
+    .success(function(data){
+      if(data == 1){
+        $('#myModalLogin').modal('show');
+        $('#alertaGuardar').show();
+      }
+      else {
+        swal("Guardado :\)")
+      }
+    })
+
+
+  }
+
 
 
 
@@ -87,13 +142,12 @@ $scope.buscar = function()
     $http.post('/recetas',{})
         .success(function(data)
         {
-          //  console.log(data)
-            $scope.recetasExistentes = data;
-
+          $scope.recetasExistentes = data;
+          console.log(data);
         })
-        .error(function()
+        .error(function(err)
         {
-            console.log("not found")
+            console.log(err)
         });
 
 
