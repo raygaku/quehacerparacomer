@@ -116,7 +116,7 @@ class recetasController extends Controller
       $uid = $_SESSION['userid'];
       $rating = $request->input('rating');
       $rid = $request->input('rid');
-      $validacion = app('db')->select("SELECT * FROM recetas_calificacion WHERE receta_id = $rid AND $uid = usuario_id"); 
+      $validacion = app('db')->select("SELECT * FROM recetas_calificacion WHERE receta_id = $rid AND $uid = usuario_id "); 
       if ($validacion == '') { //SI es nulo se puede inertar
         $query = app('db')->insert("INSERT INTO recetas_calificacion (usuario_id,calificacion,receta_id) VALUES ($uid,$rating,$rid) ");
       } else {
