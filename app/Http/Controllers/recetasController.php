@@ -15,13 +15,14 @@ class recetasController extends Controller
 
        $uid = $_SESSION['userid'];
 //        $recetas = DB::select(SELECT * FROM recetas);
-        $results = app('db')->select("SELECT r.id, r.titulo, r.texto, r.fecha_subida, r.status, r.corazones, r.portada, r.descripcion, r.categoria, rc.receta_id, rc.usuario_id, rc.calificacion FROM recetas AS r JOIN recetas_calificacion AS rc ON r.id = rc.receta_id WHERE {$uid} = rc.usuario_id ");
-        $validacion =  app('db')->select("SELECT receta_id FROM recetas_calificacion");
+        
+        $validacion =  app('db')->select("SELECT receta_id FROM recetas_calificacion WHERE usuario_id = $uid");
         if ($validacion == '') {
           $results = app('db')->select("SELECT * FROM recetas");
         }
         else{
-        $results += app('db')->select("SELECT * FROM recetas WHERE id NOT IN (SELECT receta_id FROM recetas_calificacion) ");
+          $results = app('db')->select("SELECT r.id, r.titulo, r.texto, r.fecha_subida, r.status, r.corazones, r.portada, r.descripcion, r.categoria, rc.receta_id, rc.usuario_id, rc.calificacion FROM recetas AS r JOIN recetas_calificacion AS rc ON r.id = rc.receta_id WHERE {$uid} = rc.usuario_id ");
+        $results += app('db')->select("SELECT * FROM recetas WHERE id NOT IN (SELECT receta_id FROM recetas_calificacion WHERE usuario_id = $uid) ");
       }
         return $results;
       }else {
