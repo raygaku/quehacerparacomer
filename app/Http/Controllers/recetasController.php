@@ -9,6 +9,7 @@ class recetasController extends Controller
 {
     public function cogerRecetas()
     {
+      $resultados = array();
       session_start();
       if(isset($_SESSION['userid'])){ //Si hay una sesión iniciada va a mostrar las recetas calificadas por ese usuario junto con las NO calificadas
 
@@ -19,19 +20,27 @@ class recetasController extends Controller
         $validacion =  app('db')->select("SELECT receta_id FROM recetas_calificacion WHERE usuario_id = $uid"); //Valida que existan recetas calificadas por el usuario de la sesion
         if ($validacion == null) { // Si no exisen recetas calificadas por el usuario, entonces
           $results = app('db')->select("SELECT * FROM recetas"); // Selecciona todas las recetas existentes
+
+          $resultados[] = $results;
+          return $resultados;
         }
         else{ //Si sí existen recetas calificadas, entonces
           //Trae todos las columnas (osea todas las filas donde se cumpla esa condicion) de la tabla recetas junto con todas las columnas de la tabla recetas_calificacion y se unen en el campo de id de las tablas recetas y recetas_calificacion ya que son las mismas y se van a traer la filas dónde el usuario de la sesion sea igual al campo usuario_id de la tabla recetas_calificacion (ya que se van )
           $results = app('db')->select("SELECT r.id, r.titulo, r.texto, r.fecha_subida, r.status, r.corazones, r.portada, r.descripcion, r.categoria, rc.receta_id, rc.usuario_id, rc.calificacion FROM recetas AS r JOIN recetas_calificacion AS rc ON r.id = rc.receta_id WHERE {$uid} = rc.usuario_id ");
           //Al resultado anterior se le van a sumar las recetas restantes (no calificadas)
-          $results += app('db')->select("SELECT * FROM recetas "); #Extrañamente primero se muestran las calificadas y luego las que no lo están; y cuando calificas una que NO está calificada, entonces se agrupa con las que ya lo están sobreescrbiendo el lugar dónde está la receta NO calificada más cercana o pegada o seguida a las que ya están calificadas ????
-          //WHERE id NOT IN (SELECT receta_id FROM recetas_calificacion WHERE usuario_id = $uid)
+          $results2 = app('db')->select("SELECT * FROM recetas WHERE id NOT IN (SELECT receta_id FROM recetas_calificacion WHERE usuario_id = $uid)"); #Extrañamente primero se muestran las calificadas y luego las que no lo están; y cuando calificas una que NO está calificada, entonces se agrupa con las que ya lo están sobreescrbiendo el lugar dónde está la receta NO calificada más cercana o pegada o seguida a las que ya están calificadas ????
+          $resultados[] = $results;
+          $resultados[] = $results2;
+          return $resultados;
+          //
 
       }
-        return $results;
-      }else { // Si no hay una sesion iniciada, entonces
+
+        return $resultados;
+      } else { // Si no hay una sesion iniciada, entonces
         $results = app('db')->select("SELECT * FROM recetas"); //Selecciona todas las recetas de la base de datos
-        return $results;
+        $resultados[] = $results;
+        return $resultados;
 
       }
     }
@@ -141,8 +150,5 @@ class recetasController extends Controller
     }
     }
 
-    public function eliminarCalificacion(Request $request)
-    {
 
-    }
  }

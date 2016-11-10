@@ -32,8 +32,9 @@ $scope.valor = {valor:''}
     $http.post('/calificar', $scope.calificacion )
     .success(function(data){
       if (data==0) {
-        swal("Se quito con exito :\)")
+
       } else {
+        $scope.rec.calificacion = 0
         $('#myModalLogin').modal('show');
         $('#alertaGuardar').show();
       }
@@ -45,19 +46,19 @@ $scope.valor = {valor:''}
   })
   }
 
-  $scope.eliminarCalif = function(id)
-  {
-    $scope.quitarcalif = {rid : id}
-    $http.post('/quitarCa', $scope.quitarcalif)
-    .success(function(data){
-      if (data==0) {
-
-      } else {
-        $('#myModalLogin').modal('show');
-        $('#alertaGuardar').show();
-      }
-    })
-  }
+  // $scope.eliminarCalif = function(id)
+  // {
+  //   $scope.quitarcalif = {rid : id}
+  //   $http.post('/quitarCa', $scope.quitarcalif)
+  //   .success(function(data){
+  //     if (data==0) {
+  //
+  //     } else {
+  //       $('#myModalLogin').modal('show');
+  //       $('#alertaGuardar').show();
+  //     }
+  //   })
+  // }
 
 
 
@@ -155,7 +156,8 @@ $scope.buscar = function()
     $http.post('/recetas',{})
         .success(function(data)
         {
-          $scope.recetasExistentes = data;
+          $scope.recetasExistentesRevisadas = data[0];
+          $scope.recetasExistentesNoRevisadas = data[1];
           console.log(data);
         })
         .error(function(err)
