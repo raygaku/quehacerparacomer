@@ -3,6 +3,68 @@ var lanapp = angular.module('lanapp',[]);
 lanapp.controller('MainController',['$scope','$http',function($scope,$http)
 {
 
+  
+
+  $scope.rcalificaciones = {las_demas_calificaciones:'' , mis_calificaciones:'',todas_calificadas:''}
+  $http.post('/recomendarRecetasAPI',{})
+  .success(function(data){
+    $scope.rcalificaciones.las_demas_calificaciones = data["las_demas_calificaciones"]
+    $scope.rcalificaciones.mis_calificaciones = data["mis_calificaciones"]
+    $scope.rcalificaciones.todas_calificadas =  data["todas_calificadas"]
+    //Aquí empieza el sistema de recomendación
+    //console.log($scope.rcalificaciones.todas_calificadas.length)
+    var recetaMayor = 0
+    for(var i = 0; i < $scope.rcalificaciones.todas_calificadas.length ; i++){
+      if(parseInt($scope.rcalificaciones.todas_calificadas[i].receta_id) > recetaMayor ){
+        recetaMayor = $scope.rcalificaciones.todas_calificadas[i].receta_id
+      }
+    }
+    //console.log(recetaMayor)
+    var recetaMenor = recetaMayor
+    for(var i = 0; i < $scope.rcalificaciones.todas_calificadas.length ; i++){
+      if(parseInt($scope.rcalificaciones.todas_calificadas[i].receta_id) < recetaMenor ){
+        recetaMenor = $scope.rcalificaciones.todas_calificadas[i].receta_id
+      }
+    }
+    //console.log($scope.rcalificaciones.todas_calificadas)
+    //console.log(recetaMenor)
+    var recetasAComparar = []
+    var todos = 0
+    var contador = 0
+    //console.log(" calificadas " + $scope.rcalificaciones.las_demas_calificaciones.length)
+
+    for(var i = recetaMenor ; i <= recetaMayor ; i++)
+    {
+      contador = 0
+      for(var j = 0 ; j < $scope.rcalificaciones.todas_calificadas.length; j++)
+      {
+        //console.log($scope.rcalificaciones.todas_calificadas[j].receta_id)
+        
+        if(i == $scope.rcalificaciones.todas_calificadas[j].receta_id)
+        {
+          console.log(i+ " es igual a  " + $scope.rcalificaciones.todas_calificadas[j].receta_id)
+          contador++
+        }
+        
+      }
+      if(contador >= 4)
+        {
+          recetasAComparar[recetasAComparar.length] = i
+        }
+    }
+    
+    
+    console.log(recetasAComparar)
+
+    //aquí termina el sistema de recomendación
+  })
+  .error(function(err){
+    console.log(err)
+  })
+
+
+
+
   $scope.pin = function(rec)
   {
     $scope.piner = {recetaid : rec}

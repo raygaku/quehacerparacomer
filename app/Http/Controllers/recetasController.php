@@ -151,4 +151,19 @@ class recetasController extends Controller
     }
 
 
+    public function recomendarRecetasAPI()
+    {
+      session_start();
+      $uid = $_SESSION['userid'];
+      $recetas_calificaciones_no = app('db')->select("SELECT * FROM recetas_calificacion WHERE usuario_id != $uid");
+      $recetas_calificaciones_si = app('db')->select("SELECT * FROM recetas_calificacion WHERE usuario_id  = $uid");
+      $todas_calificadas = app('db')->select("SELECT * FROM recetas_calificacion");
+      $data = array(
+        "mis_calificaciones" =>  $recetas_calificaciones_si,
+        "las_demas_calificaciones" => $recetas_calificaciones_no,
+        "todas_calificadas" =>$todas_calificadas,
+        );
+      return $data;
+    }
+
  }

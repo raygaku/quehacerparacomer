@@ -52,13 +52,6 @@ $app->get('edad2/{edad?}', function ($edad = 20){ //En esa ruta se le da un parÃ
 
 
 
-
-
-
-
-
-
-
 $app->get('/categoria={categoria}','categoriasController@obtenerVista');
 $app->get('/misRecetas',function(){
   return view("misrecetas");
@@ -85,8 +78,7 @@ $app->get('/sudoPanel', ['middleware' => 'checkSudo', function () {
 
 
 
-
-
+$app->post('/recomendarRecetasAPI','recetasController@recomendarRecetasAPI');
 $app->post('/calificar', 'recetasController@guardarCalificacion');
 $app->post('/recetas', 'recetasController@cogerRecetas');
 $app->post('/cogerRecetaPorID', 'recetasController@cogerRecetasPorId');
