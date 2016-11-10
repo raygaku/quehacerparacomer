@@ -147,7 +147,7 @@ session_start();
 
     <div class="row">
         <div class="col-sm-6 col-md-4" ng-repeat="rec in recetasExistentes">
-            <div class="thumbnail " ng-if="1">
+            <div class="thumbnail " >
                 <img ng-src="{{rec.portada}}" alt="..."  ng-click="leer(rec.id)" data-toggle="modal" data-target="#myModal" style="max-height: 16em;" class="img-thumbnail">
                 <div class="caption">
                     <h3 ng-click="leer(rec.id)" data-toggle="modal" data-target="#myModal">{{rec.titulo}}</h3>
@@ -188,7 +188,8 @@ session_start();
 
 
 
-                    <p><a href="#" class="btn btn-primary" role="button" ng-click="leer(rec.id)" data-toggle="modal" data-target="#myModal">Leer</a><a href="#" class="btn btn-default" role="button" ng-click="pin(rec.id)" onclick="login.submit();">Guardar</a></p>
+                    <p><a href="#" class="btn btn-primary" role="button" ng-click="leer(rec.id)" data-toggle="modal" data-target="#myModal">Leer</a><a href="#" class="btn btn-default" role="button" ng-click="pin(rec.id)">Guardar</a>
+                    <a href="#" class="btn btn-default" role="button" ng-click="eliminarCalif(rec.id)">Quitar calificacion</a></p>               
 
 
 

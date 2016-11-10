@@ -32,9 +32,8 @@ $scope.valor = {valor:''}
     $http.post('/calificar', $scope.calificacion )
     .success(function(data){
       if (data==0) {
-        swal("Guardado : \)")
+        swal("Se quito con exito :\)")
       } else {
-        $scope.rec.calificacion = 0
         $('#myModalLogin').modal('show');
         $('#alertaGuardar').show();
       }
@@ -44,6 +43,20 @@ $scope.valor = {valor:''}
   .error(function(err){
     console.log(err)
   })
+  }
+
+  $scope.eliminarCalif = function(id)
+  {
+    $scope.quitarcalif = {rid : id}
+    $http.post('/quitarCa', $scope.quitarcalif)
+    .success(function(data){
+      if (data==0) {
+
+      } else {
+        $('#myModalLogin').modal('show');
+        $('#alertaGuardar').show();
+      }
+    })
   }
 
 
@@ -57,23 +70,23 @@ $scope.valor = {valor:''}
   //     console.log("data inserted");
   //   });
   // }
-  $scope.cal = function(rec)
-  {
-    $scope.piner = {recetaid : rec}
-    $scope.ratings = {rating : ratings}
-    $http.post('/calificar', $scope.ratings)
-    .success(function(data){
-      if(data == 1){
-        $('#myModalLogin').modal('show');
-        $('#alertaGuardar').show();
-      }
-      else {
-        swal("Guardado :\)")
-      }
-    })
-
-
-  }
+  // $scope.cal = function(rec)
+  // {
+  //   $scope.piner = {recetaid : rec}
+  //   $scope.ratings = {rating : ratings}
+  //   $http.post('/calificar', $scope.ratings)
+  //   .success(function(data){
+  //     if(data == 1){
+  //       $('#myModalLogin').modal('show');
+  //       $('#alertaGuardar').show();
+  //     }
+  //     else {
+  //       swal("Guardado :\)")
+  //     }
+  //   })
+  //
+  //
+  // }
 
 
 
