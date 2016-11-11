@@ -130,8 +130,63 @@ lanapp.controller('MainController',['$scope','$http',function($scope,$http)
     usuariosACompararFinal.map(quitarSobrasRecetas)
     console.log(recetasdeOtrosAComparar)
 
-  
 
+//PROMEDIOS
+
+    var promedioPorUsuario = {usuarioid:'',promedio:''}
+    var promedioMiUsuario
+    var sumaMiPromedio = 0
+    for (var i=0; i<compararPersonal.length; i++){
+        sumaMiPromedio += compararPersonal[i].score 
+    }
+    var mipromedio = parseFloat(sumaMiPromedio / compararPersonal.length)
+    promedioMiUsuario = mipromedio.toFixed(4)
+
+    for (var x=0; x<usuariosACompararFinal.length; x++){
+      var suma=0
+      for (var y=0; y<recetasdeOtrosAComparar.length; y++){
+          if (usuariosACompararFinal[x] == recetasdeOtrosAComparar[y].usurioid){
+            suma+= $scope.rcalificaciones.las_demas_calificaciones[y].calificacion
+          }
+        //console.log(usuariosACompararFinal[x] + " es igual a "  + recetasdeOtrosAComparar[y].usurioid + " " + (usuariosACompararFinal[x] == recetasdeOtrosAComparar[y].usurioid))
+      }
+      promedio = parseFloat(suma/compararPersonal.length)
+      promedioPorUsuario[x] = {usuarioid: usuariosACompararFinal[x], promedio: promedio.toFixed(3)}
+    }
+    //console.log(promedioPorUsuario)
+    //console.log(promedioMiUsuario)
+//FIN DE PROMEDIOS
+
+   var similitudPorUsuario = {usuarioid:'', similitud:''}
+    for (var x=0; x<usuariosACompararFinal.length; x++){
+      var suma_num = 0
+      var suma_raiz_1=0
+      var suma_raiz_2=0
+      var contador = 0
+      for (var y=0; y<recetasdeOtrosAComparar.length; y++){
+          if (usuariosACompararFinal[x] == recetasdeOtrosAComparar[y].usurioid){
+              suma_num += (compararPersonal[contador].score - promedioMiUsuario) * ($scope.rcalificaciones.las_demas_calificaciones[y].calificacion - promedioPorUsuario[x].promedio)
+              suma_raiz_1 += Math.pow((compararPersonal[contador].score - promedioMiUsuario),2)
+              suma_raiz_2 += Math.pow(($scope.rcalificaciones.las_demas_calificaciones[y].calificacion - promedioPorUsuario[x].promedio),2)
+              contador++
+          }
+      }
+      raiz_1 = Math.pow(suma_raiz_1, 0.5)
+      raiz_2 = Math.pow(suma_raiz_2, 0.5)
+      similitud = suma_num / (raiz_1 * raiz_2)
+      similitudPorUsuario[x] = {usuarioid:usuariosACompararFinal[x], similitud:similitud.toFixed(3)}
+    }
+    console.log(similitudPorUsuario)
+
+    var similitudMayor = {usuarioid:'',similitud:''}
+    sim_max = 0
+    for(i=0; i<usuariosACompararFinal.length; i++){
+      if(parseFloat(similitudPorUsuario[i].similitud) > sim_max){
+          similitudMayor = {usuarioid:usuariosACompararFinal[i], similitud:similitudPorUsuario[i].similitud}
+          sim_max = similitudPorUsuario[i].similitud
+      }
+    }
+    console.log(similitudMayor)
 
     //aquí termina el sistema de recomendación
   })
