@@ -215,6 +215,41 @@ $scope.task= function(funcion)
 
 }
 
+//Speech
+if(annyang){
+  var commands = {
+    'Muéstrame *ctg': function(ctg){
+      switch (ctg) {
+            case 'postres':
+                var ctgr = 1;
+                break;
+            case 'sopas':
+                var ctgr = 9;
+                break;
+            default:
+
+        }
+      console.log(ctgr);
+      $scope.srch(ctgr);
+    }
+  }
+
+  $scope.srch = function(ctgr)
+  {
+      window.location = "/categoria="+ctgr
+  }
+
+//Es muy lento en español, si quieren probarlo en ingles solo eliminen set.Language y queda predeterminado en-US
+  annyang.setLanguage('es-MX');
+  annyang.addCommands(commands);
+  annyang.debug();
+  SpeechKITT.setInstructionsText('Puedo ayudarle si utiliza...');
+  SpeechKITT.setSampleCommands(['Muestrame sopas/postres']);
+  SpeechKITT.annyang();
+  SpeechKITT.setStylesheet('//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/themes/flat.css');
+  SpeechKITT.vroom();
+}
+
    $scope.realizarRegistro = function(){
      $http.post('/registrarUsuario',$scope.usuarioAregistrar)
      .success(function(data){
