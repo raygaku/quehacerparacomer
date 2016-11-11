@@ -42,19 +42,96 @@ lanapp.controller('MainController',['$scope','$http',function($scope,$http)
         
         if(i == $scope.rcalificaciones.todas_calificadas[j].receta_id)
         {
-          console.log(i+ " es igual a  " + $scope.rcalificaciones.todas_calificadas[j].receta_id)
+          //console.log(i+ " es igual a  " + $scope.rcalificaciones.todas_calificadas[j].receta_id)
           contador++
         }
         
       }
-      if(contador >= 4)
+      if(contador >= 3)
         {
           recetasAComparar[recetasAComparar.length] = i
         }
     }
     
     
-    console.log(recetasAComparar)
+    //console.log(recetasAComparar)
+    
+    var compararPersonal = [] 
+    var recetaComparaPersonal = {recetaid:'',score:'',usurioid:''}
+    var recetasFinalesAComparar = []
+    function compararAmisRecetas(item,index){
+      for (var i = 0 ; i < $scope.rcalificaciones.mis_calificaciones.length; i++)
+      {
+        if( item == $scope.rcalificaciones.mis_calificaciones[i].receta_id){
+          recetasFinalesAComparar[recetasFinalesAComparar.length] = item
+
+          compararPersonal[compararPersonal.length] = recetaComparaPersonal = {
+            recetaid:$scope.rcalificaciones.mis_calificaciones[i].receta_id,
+            score:$scope.rcalificaciones.mis_calificaciones[i].calificacion,
+            usuarioid:$scope.rcalificaciones.mis_calificaciones[i].usuario_id,
+          }
+        }
+      }
+    }
+    recetasAComparar.map(compararAmisRecetas)
+    console.log(compararPersonal)
+
+    var compararLosDemas = [] 
+    var recetaComparaLosDemas = {recetaid:'',score:'',usurioid:''}
+    var usuariosAComparar = []
+    function compararAlasDemas(item,index){
+      for(var i = 0; i < $scope.rcalificaciones.las_demas_calificaciones.length;i++)
+      {
+        if(item == $scope.rcalificaciones.las_demas_calificaciones[i].receta_id){
+          compararLosDemas[compararLosDemas.length] = recetaComparaLosDemas = {
+          recetaid:$scope.rcalificaciones.las_demas_calificaciones[i].receta_id,
+          score:$scope.rcalificaciones.las_demas_calificaciones[i].calificacion,
+          usurioid:$scope.rcalificaciones.las_demas_calificaciones[i].usuario_id
+            }
+          usuariosAComparar[usuariosAComparar.length] = $scope.rcalificaciones.las_demas_calificaciones[i].usuario_id
+          }
+        }
+      }
+    recetasFinalesAComparar.map(compararAlasDemas)
+    //console.log(compararLosDemas)
+    //console.log(usuariosAComparar)
+    var usuariosACompararFinal = []
+    function quitarSobras(item,index){
+      var contadorq = 0 
+      for (var thing in usuariosAComparar){
+        //console.log(item + " es igual " + usuariosAComparar[thing] + (item == usuariosAComparar[thing]))
+        if(item == usuariosAComparar[thing]){
+          contadorq++
+        }
+      }
+      if(contadorq >= compararPersonal.length){
+        usuariosACompararFinal[usuariosACompararFinal.length] = item
+      }
+    }
+    //quitarSobras(7)
+    usuariosAComparar.map(quitarSobras)
+    //console.log(usuariosACompararFinal)
+    Array.prototype.unique=function(a){
+    return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
+    });
+    usuariosACompararFinal = usuariosACompararFinal.unique()
+    //console.log(usuariosACompararFinal)
+    compararAlasDemasFinal = []
+
+    recetasdeOtrosAComparar = []
+    function quitarSobrasRecetas(item, index){
+     for (var i in compararLosDemas){
+      if(item ==  compararLosDemas[i].usurioid){
+        recetasdeOtrosAComparar[recetasdeOtrosAComparar.length] = compararLosDemas[i]
+      }
+     }
+    }
+
+    usuariosACompararFinal.map(quitarSobrasRecetas)
+    console.log(recetasdeOtrosAComparar)
+
+  
+
 
     //aquí termina el sistema de recomendación
   })
