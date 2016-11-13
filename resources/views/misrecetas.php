@@ -112,6 +112,22 @@ session_start();
             </div>
         </div>
     </div>
+
+
+    <div class="row">
+       <h2>Recetas que podrian gustarte</h2>
+        <div ng-repeat="recetas in recetasRecomendadas">
+        <div class="col-sm-6 col-md-4" ng-repeat="rec in recetas">
+            <div class="thumbnail">
+                <img ng-src="{{rec.portada}}" alt="..."  ng-click="leer(rec.id)" data-toggle="modal" data-target="#myModal" style="max-height: 16em;" class="img-thumbnail">
+                <div class="caption">
+                    <h3 ng-click="leer(rec.id)" data-toggle="modal" data-target="#myModal">{{rec.titulo}}</h3>
+                    <p ng-click="leer(rec.id)" data-toggle="modal" data-target="#myModal"> {{rec.descripcion}}</p>
+                    <p><a href="#" class="btn btn-primary" role="button" ng-click="leer(rec.id)" data-toggle="modal" data-target="#myModal">Leer</a> <!--<a href="#" class="btn btn-default" role="button" ng-click="pin(rec.id)">Guardar</a>--></p>
+                </div>
+            </div>
+        </div>
+        </div>
 </div>
 <div class="container">
 

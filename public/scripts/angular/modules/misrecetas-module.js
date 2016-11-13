@@ -5,6 +5,7 @@ lanapp.controller('MainController',['$scope','$http',function($scope,$http)
 
   
 
+    idDeRecetasArecomendar = [];
   $scope.rcalificaciones = {las_demas_calificaciones:'' , mis_calificaciones:'',todas_calificadas:''}
   $http.post('/recomendarRecetasAPI',{})
   .success(function(data){
@@ -186,16 +187,122 @@ lanapp.controller('MainController',['$scope','$http',function($scope,$http)
           sim_max = similitudPorUsuario[i].similitud
       }
     }
-    console.log(similitudMayor)
 
+    var usuariosSimilares = [];
+    usuariosSimilares[usuariosSimilares.length] = similitudMayor;
+    //usuariosSimilares[usuariosSimilares.length] = {usuarioid: 10, similitud:"0.180"};
+    console.log(similitudMayor);
+    var recetasDelSimilitudMayor = [];
+    function recetasDelElegido(item,index){
+      //console.log(similitudMayor.usuarioid)
+      if (similitudMayor.usuarioid == item.usuario_id){
+        recetasDelSimilitudMayor[recetasDelSimilitudMayor.length] = item;
+      } 
+    }
+    $scope.rcalificaciones.las_demas_calificaciones.map(recetasDelElegido); 
+    console.log(recetasDelSimilitudMayor);
+
+    //console.log(compararPersonal);
+    var recetasARecomendar01 = []
+    function quitarRecetasRepetidas(item, intex){
+      var contador = 0;
+      for(var i  = 0 ; i < compararPersonal.length; i++)
+      {
+        if(item.receta_id == compararPersonal[i].recetaid){
+          contador++;
+        }
+      }
+      if(contador == 0){
+        recetasARecomendar01[recetasARecomendar01.length] = item;
+      }
+    }
+
+    recetasDelSimilitudMayor.map(quitarRecetasRepetidas);
+    console.log(recetasARecomendar01);
+    console.log(usuariosSimilares);
+    
+    var k = 0;
+    function calcularK(item,index)
+    {
+      k += parseFloat(item.similitud);
+      return k; 
+    }
+
+    k = usuariosSimilares.map(calcularK);
+    kfn = k[k.length -1] // esta es la k, el denominador de la funcion para predecir
+    console.log(kfn)
+    promediosdeUSimilares = []
+    function promediosDeSimilares(item,index){
+      for(var i = 0; i < usuariosACompararFinal.length; i++){
+        //console.log(item)
+        if(item.usuarioid == promedioPorUsuario[i].usuarioid){
+          promediosdeUSimilares[promediosdeUSimilares.length] = promedioPorUsuario[i];
+        }
+      }
+    }
+
+    usuariosSimilares.map(promediosDeSimilares);
+    console.log(promediosdeUSimilares);
+    console.log(recetasARecomendar01)
+    var productoDesumatoria = 0;
+    var productosDesumatoria = [];
+    function numeradorPredictor(item,index){
+      for(var i = 0; i < recetasARecomendar01.length; i++)
+      {
+        productoDesumatoria = 0;
+        if(recetasARecomendar01[i].usuario_id == item.usuarioid){
+          productoDesumatoria = item.similitud * parseFloat(recetasARecomendar01[i].calificacion - parseFloat(promediosdeUSimilares[index].promedio)); 
+          prediccion = parseFloat(productoDesumatoria/Math.abs(kfn)) + parseFloat(promedioMiUsuario);
+          productosDesumatoria[productosDesumatoria.length] = {recetaid:recetasARecomendar01[i].receta_id,calificacion:prediccion}
+        }        
+      }
+    }
+    usuariosSimilares.map(numeradorPredictor);
+    console.log(productosDesumatoria);
+    console.log(promedioMiUsuario);
+    console.log(usuariosSimilares);
+
+   idDeRecetasArecomendar = [];
+    for(var i in productosDesumatoria){
+      //console.log(productosDesumatoria[i])
+      if(productosDesumatoria[i].calificacion >= 3.0)
+      {
+        idDeRecetasArecomendar[idDeRecetasArecomendar.length] = productosDesumatoria[i].recetaid;
+      }
+    }
+
+    console.log(idDeRecetasArecomendar)
     //aquí termina el sistema de recomendación
+
+    if(idDeRecetasArecomendar.length != 0){
+      $scope.recetasRecomendadas = [];
+        for(var i = 0; i < idDeRecetasArecomendar.length; i++){
+          $scope.idArecomendar = {id:idDeRecetasArecomendar[i]};
+          console.log($scope.idArecomendar)
+          
+          $http.post('/cogerRecetaPorID',$scope.idArecomendar)
+            .success(function(data){
+              $scope.recetasRecomendadas[$scope.recetasRecomendadas.length] = data;
+              console.log("$scope.recetasRecomendadas ");
+              console.log($scope.recetasRecomendadas);
+            })
+            .error(function(err){
+              console.log(err)
+            }) 
+         
+        }    
+//$app->post('/cogerRecetaPorID', 'recetasController@cogerRecetasPorId');
+    }
+    else{
+      console.log("no hay que recomendar")
+    }
+    
   })
   .error(function(err){
     console.log(err)
   })
 
-
-
+ //console.log(idDeRecetasArecomendar);
 
   $scope.pin = function(rec)
   {
