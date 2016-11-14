@@ -123,7 +123,7 @@ class recetasController extends Controller
       $uid = $_SESSION['userid'];
       $query = app('db')->select(
       "SELECT pins.userid, pins.recetaid , recetas.id, recetas.titulo, recetas.texto,recetas.status, recetas.corazones, recetas.portada,
-       recetas.descripcion,recetas.categoria FROM recetas JOIN pins ON pins.recetaid = recetas.id WHERE pins.userid ={$uid} ORDER  BY recetas.id DESC "
+       recetas.descripcion,recetas.categoria, recetas_calificacion.receta_id, recetas_calificacion.usuario_id, recetas_calificacion.calificacion FROM recetas JOIN pins ON pins.recetaid = recetas.id JOIN recetas_calificacion ON recetas.id = recetas_calificacion.receta_id WHERE pins.userid ={$uid} AND {$uid} = recetas_calificacion.usuario_id  ORDER  BY recetas.id DESC "
     );
 
     return $query;

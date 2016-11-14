@@ -3,7 +3,7 @@ var lanapp = angular.module('lanapp',[]);
 lanapp.controller('MainController',['$scope','$http',function($scope,$http)
 {
 
-  
+
 
     idDeRecetasArecomendar = [];
   $scope.rcalificaciones = {las_demas_calificaciones:'' , mis_calificaciones:'',todas_calificadas:''}
@@ -40,24 +40,24 @@ lanapp.controller('MainController',['$scope','$http',function($scope,$http)
       for(var j = 0 ; j < $scope.rcalificaciones.todas_calificadas.length; j++)
       {
         //console.log($scope.rcalificaciones.todas_calificadas[j].receta_id)
-        
+
         if(i == $scope.rcalificaciones.todas_calificadas[j].receta_id)
         {
           //console.log(i+ " es igual a  " + $scope.rcalificaciones.todas_calificadas[j].receta_id)
           contador++
         }
-        
+
       }
       if(contador >= 3)
         {
           recetasAComparar[recetasAComparar.length] = i
         }
     }
-    
-    
+
+
     //console.log(recetasAComparar)
-    
-    var compararPersonal = [] 
+
+    var compararPersonal = []
     var recetaComparaPersonal = {recetaid:'',score:'',usurioid:''}
     var recetasFinalesAComparar = []
     function compararAmisRecetas(item,index){
@@ -77,7 +77,7 @@ lanapp.controller('MainController',['$scope','$http',function($scope,$http)
     recetasAComparar.map(compararAmisRecetas)
     console.log(compararPersonal)
 
-    var compararLosDemas = [] 
+    var compararLosDemas = []
     var recetaComparaLosDemas = {recetaid:'',score:'',usurioid:''}
     var usuariosAComparar = []
     function compararAlasDemas(item,index){
@@ -98,7 +98,7 @@ lanapp.controller('MainController',['$scope','$http',function($scope,$http)
     //console.log(usuariosAComparar)
     var usuariosACompararFinal = []
     function quitarSobras(item,index){
-      var contadorq = 0 
+      var contadorq = 0
       for (var thing in usuariosAComparar){
         //console.log(item + " es igual " + usuariosAComparar[thing] + (item == usuariosAComparar[thing]))
         if(item == usuariosAComparar[thing]){
@@ -138,7 +138,7 @@ lanapp.controller('MainController',['$scope','$http',function($scope,$http)
     var promedioMiUsuario
     var sumaMiPromedio = 0
     for (var i=0; i<compararPersonal.length; i++){
-        sumaMiPromedio += compararPersonal[i].score 
+        sumaMiPromedio += compararPersonal[i].score
     }
     var mipromedio = parseFloat(sumaMiPromedio / compararPersonal.length)
     promedioMiUsuario = mipromedio.toFixed(4)
@@ -197,9 +197,9 @@ lanapp.controller('MainController',['$scope','$http',function($scope,$http)
       //console.log(similitudMayor.usuarioid)
       if (similitudMayor.usuarioid == item.usuario_id){
         recetasDelSimilitudMayor[recetasDelSimilitudMayor.length] = item;
-      } 
+      }
     }
-    $scope.rcalificaciones.las_demas_calificaciones.map(recetasDelElegido); 
+    $scope.rcalificaciones.las_demas_calificaciones.map(recetasDelElegido);
     console.log(recetasDelSimilitudMayor);
 
     //console.log(compararPersonal);
@@ -220,12 +220,12 @@ lanapp.controller('MainController',['$scope','$http',function($scope,$http)
     recetasDelSimilitudMayor.map(quitarRecetasRepetidas);
     console.log(recetasARecomendar01);
     console.log(usuariosSimilares);
-    
+
     var k = 0;
     function calcularK(item,index)
     {
       k += parseFloat(item.similitud);
-      return k; 
+      return k;
     }
 
     k = usuariosSimilares.map(calcularK);
@@ -251,10 +251,10 @@ lanapp.controller('MainController',['$scope','$http',function($scope,$http)
       {
         productoDesumatoria = 0;
         if(recetasARecomendar01[i].usuario_id == item.usuarioid){
-          productoDesumatoria = item.similitud * parseFloat(recetasARecomendar01[i].calificacion - parseFloat(promediosdeUSimilares[index].promedio)); 
+          productoDesumatoria = item.similitud * parseFloat(recetasARecomendar01[i].calificacion - parseFloat(promediosdeUSimilares[index].promedio));
           prediccion = parseFloat(productoDesumatoria/Math.abs(kfn)) + parseFloat(promedioMiUsuario);
           productosDesumatoria[productosDesumatoria.length] = {recetaid:recetasARecomendar01[i].receta_id,calificacion:prediccion}
-        }        
+        }
       }
     }
     usuariosSimilares.map(numeradorPredictor);
@@ -279,7 +279,7 @@ lanapp.controller('MainController',['$scope','$http',function($scope,$http)
         for(var i = 0; i < idDeRecetasArecomendar.length; i++){
           $scope.idArecomendar = {id:idDeRecetasArecomendar[i]};
           console.log($scope.idArecomendar)
-          
+
           $http.post('/cogerRecetaPorID',$scope.idArecomendar)
             .success(function(data){
               $scope.recetasRecomendadas[$scope.recetasRecomendadas.length] = data;
@@ -288,15 +288,15 @@ lanapp.controller('MainController',['$scope','$http',function($scope,$http)
             })
             .error(function(err){
               console.log(err)
-            }) 
-         
-        }    
+            })
+
+        }
 //$app->post('/cogerRecetaPorID', 'recetasController@cogerRecetasPorId');
     }
     else{
       console.log("no hay que recomendar")
     }
-    
+
   })
   .error(function(err){
     console.log(err)
@@ -516,5 +516,31 @@ $scope.task= function(funcion)
         .error(function(data){
           //  console.log("Ocurrio error 505")
         })
+
+
+
+
+        $scope.valor = {valor:''}
+          $scope.enviarCalf = function(id, valor)
+          {
+            console.log($scope.valor);
+            console.log(id + " "+ valor);
+            $scope.calificacion = {rating : valor, rid : id}
+            $http.post('/calificar', $scope.calificacion )
+            .success(function(data){
+              if (data==0) {
+
+              } else {
+                $scope.rec.calificacion = 0
+                $('#myModalLogin').modal('show');
+                $('#alertaGuardar').show();
+              }
+
+
+          })
+          .error(function(err){
+            console.log(err)
+          })
+          }
 
 }]);
